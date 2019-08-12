@@ -94,6 +94,7 @@
                   htmlType="submit"
                   type="white"
                   :disabled="signinDisabled"
+                  @click="signIn()"
                 >注册</a-button>
               </a-form-item>
             </a-tab-pane>
@@ -189,6 +190,20 @@ export default {
     },
     async signIn() {
       this.logguping = true;
+      let res = await this.$http.post('/api/v1/join', this.signinData);
+      if (res.data.success) {
+        // localStorage.setItem('token', res.data.data.token);
+        // if (this.isSave) {
+        //   localStorage.setItem('uid', this.login.uid)
+        //   localStorage.setItem('id', btoa(this.login.password))
+        // }
+        // this.$store.dispatch('user/getUserInfo');
+        // this.$router.push(this.$route.query.redirect || '/');
+        this.$message.success('注册成功！', 3);
+        // this.$message.success(res.data.message)
+      } else {
+        this.$message.error(res.data.message);
+      }
     },
   },
   mounted() {
