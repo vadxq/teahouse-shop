@@ -9,7 +9,7 @@ const crypto = require('crypto');
 class UserService extends Service {
   // 签名
   generateToken(user) {
-    return this.ctx.app.jwt.sign({ uid: user.uid, role: user.role, exp: Date.now() + 60 * 60 * 1000 }, this.ctx.app.config.jwt.secret);
+    return this.ctx.app.jwt.sign({ uid: user.uid, role: user.role, exp: Date.now() + 24 * 60 * 60 * 1000 }, this.ctx.app.config.jwt.secret);
   }
 
   // 注册
@@ -62,13 +62,20 @@ class UserService extends Service {
   async signIn(req) {
     const user = await this.ctx.model.User.findOne({ uid: req.uid });
     if (user) {
-      if (user.password === crypto.createHash('md5').update(req.password).digest('hex')) {
-        const token = this.generateToken(user);
+      if (user.status) {
+        if (user.password === crypto.createHash('md5').update(req.password).digest('hex')) {
+          const token = this.generateToken(user);
+          return {
+            status: 1,
+            res: {
+              token,
+            },
+          };
+        }
+      } else {
         return {
-          status: 1,
-          res: {
-            token,
-          },
+          status: 0,
+          res: '账户已被禁用',
         };
       }
     }
