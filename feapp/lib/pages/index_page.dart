@@ -4,6 +4,9 @@ import 'package:feapp/pages/cart_page.dart';
 import 'package:feapp/pages/home_page.dart';
 import 'package:feapp/pages/me_page.dart';
 import 'package:feapp/pages/memu_page.dart';
+import 'package:feapp/provides/app_state.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IndexPage extends StatefulWidget {
   @override
@@ -41,6 +44,14 @@ class _IndexPageState extends State<IndexPage> {
           });
         }
       });
+    _setLogin();
+  }
+
+  _setLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.getString('token') != null && prefs.getString('uid') != null) {
+      Provider.of<AppState>(context).updateIsLogin(true);
+    }
   }
 
   @override

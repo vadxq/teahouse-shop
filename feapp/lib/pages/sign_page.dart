@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:feapp/service/service_methods.dart';
+import 'package:feapp/provides/app_state.dart';
+import 'package:provider/provider.dart';
 
 class SignPage extends StatefulWidget {
   @override
@@ -119,6 +121,7 @@ class _LoginPageState extends State<LoginPage> {
       Fluttertoast.showToast(msg: data['message']);
       if (data['success'] == true) {
         _setData(data['data']['token']);
+        Provider.of<AppState>(context).updateIsLogin(true);
         // Navigator.of(context).pop(true);
         Navigator.pushNamedAndRemoveUntil(
             context, 'IndexPage', (router) => router == null);
