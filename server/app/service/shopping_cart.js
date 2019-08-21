@@ -11,19 +11,34 @@ class ShoppingCartService extends Service {
    */
   async addShopItem(req, uid) {
     req.uid = uid;
-    const shoppingCartItem = await this.ctx.model.ShoppingCart.create(req);
-    if (shoppingCartItem) {
-      const updateShop = await this.ctx.model.User.update({
-        uid,
-      }, {
-        /* eslint-disable-next-line */
-        '$push': { shoppingCart: shoppingCartItem.scid },
-      });
+    let updateShop;
+    console.log(req);
+    delete req._id;
+    const testExist = await this.ctx.model.ShoppingCart.findOne({ uid, pid: req.pid, status: 1 });
+    if (testExist) {
+      updateShop = await this.ctx.model.ShoppingCart.findOneAndUpdate({ uid, pid: req.pid }, { count: req.count, sale: testExist.price * req.count });
       if (updateShop) {
         return {
           status: 1,
-          res: shoppingCartItem,
+          res: updateShop,
         };
+      }
+    } else {
+      req.sale = req.price * req.count;
+      const shoppingCartItem = await this.ctx.model.ShoppingCart.create(req);
+      if (shoppingCartItem) {
+        updateShop = await this.ctx.model.User.update({
+          uid,
+        }, {
+          /* eslint-disable-next-line */
+          '$push': { shoppingCart: shoppingCartItem.scid },
+        });
+        if (updateShop) {
+          return {
+            status: 1,
+            res: shoppingCartItem,
+          };
+        }
       }
     }
     return {

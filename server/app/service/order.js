@@ -20,6 +20,10 @@ class ShoppingCartService extends Service {
         /* eslint-disable-next-line */
         '$push': { order: orderItem.oid },
       });
+      // 删除购物车
+      for (const item of req.item) {
+        await this.ctx.model.ShoppingCart.findOneAndUpdate({ scid: item.scid }, { status: 2 });
+      }
       if (updateUserOrder) {
         return {
           status: 1,
@@ -181,7 +185,7 @@ class ShoppingCartService extends Service {
     );
     const items = await this.ctx.model.Order.find({
       oid: { $in: user.order }, status: { $in: [ 1, 2 ] },
-    });
+    }).sort({ oid: -1 });
     if (user) {
       return {
         res: {
