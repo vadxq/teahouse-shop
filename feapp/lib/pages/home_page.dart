@@ -3,6 +3,10 @@ import 'package:feapp/service/service_methods.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:feapp/provides/app_state.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -170,9 +174,11 @@ class _HomePageState extends State<HomePage>
                         ),
                       ),
                       Text(
-                        '价格：' + subject['price'].toString(),
+                        '￥ ' + subject['price'].toString(),
                         style: TextStyle(
                             height: 1.2,
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.w600,
                           ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -282,14 +288,34 @@ class _HomePageState extends State<HomePage>
               ),
               FlatButton(
                 child: Text('添加'),
-                onPressed: () {
+                onPressed: () async{
                   // ... 执行删除操作
-                  print(subject['cart']);
+                  _addItem(subject);
+                  
                   Navigator.of(context).pop(true);
                 },
               ),
             ],
           );
         });
+  }
+
+  _addItem(data) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print(prefs.getString('uid'));
+    if(prefs.getString('uid') != null) {
+      data['count'] = data['cart'];
+      data['uid'] = prefs.getString('uid');
+      var res = await addShoppingCart(data);
+      if (res['success']) {
+        Fluttertoast.showToast(msg: '添加成功~');
+        getShoppingCartList(context);
+      } else {
+        Fluttertoast.showToast(msg: '添加失败~');
+      }
+    } else {
+      Fluttertoast.showToast(msg: '请登录~');
+      Provider.of<AppState>(context).updateIsLogin(false);
+    }
   }
 }

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:feapp/service/service_methods.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:feapp/provides/app_state.dart';
+import 'package:provider/provider.dart';
 
 class MenuPage extends StatefulWidget {
   @override
@@ -34,7 +38,7 @@ class _MenuPageState extends State<MenuPage>
     await Future.delayed(Duration(seconds: 2), () {
       getMenuPageList({
         'page': 1,
-        'limit': 1,
+        'limit': 10,
       }).then((data) => setState(() {
             menuItemList.clear();
             for (var item in data['data']['data']) {
@@ -42,13 +46,6 @@ class _MenuPageState extends State<MenuPage>
             }
             currentPage = data['data']['currentPage'];
             pages = data['data']['pages'];
-            menuItemList.addAll(data['data']['data']);
-            menuItemList.addAll(data['data']['data']);
-            menuItemList.addAll(data['data']['data']);
-            menuItemList.addAll(data['data']['data']);
-            menuItemList.addAll(data['data']['data']);
-            menuItemList.addAll(data['data']['data']);
-            menuItemList.addAll(data['data']['data']);
             menuItemList.addAll(data['data']['data']);
           }));
     });
@@ -61,7 +58,7 @@ class _MenuPageState extends State<MenuPage>
       await Future.delayed(Duration(seconds: 1), () {
         getMenuPageList({
           'page': currentPage + 1,
-          'limit': 1,
+          'limit': 10,
         }).then((data) => setState(() {
               currentPage = data['data']['currentPage'];
               pages = data['data']['pages'];
@@ -87,7 +84,15 @@ class _MenuPageState extends State<MenuPage>
     ScreenUtil.instance = ScreenUtil(width: 1080, height: 1794)..init(context);
     return Scaffold(
       backgroundColor: Color.fromRGBO(222, 222, 222, 0.6),
-      appBar: AppBar(title: Text('清竹茶馆菜单')),
+      appBar: AppBar(
+        automaticallyImplyLeading: false, //左边按钮
+        centerTitle: true,
+        title: new Text(
+          '清竹茶馆菜单',
+          style: new TextStyle(color: Colors.white, fontSize: 20.0),
+        ),
+        backgroundColor: Colors.lightBlueAccent,
+      ),
       body: Center(
         child: getBody(),
       ),
@@ -166,9 +171,11 @@ class _MenuPageState extends State<MenuPage>
                         ),
                       ),
                       Text(
-                        '价格：' + subject['price'].toString(),
+                       '￥ ' + subject['price'].toString(),
                         style: TextStyle(
                             height: 1.2,
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.w600,
                           ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -282,7 +289,7 @@ class _MenuPageState extends State<MenuPage>
                 child: Text('添加'),
                 onPressed: () {
                   // ... 执行删除操作
-                  print(subject['cart']);
+                  _addItem(subject);
                   Navigator.of(context).pop(true);
                 },
               ),
@@ -290,6 +297,25 @@ class _MenuPageState extends State<MenuPage>
           );
         });
   }
+  
+  _addItem(data) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.getString('uid') != null) {
+      data['count'] = data['cart'];
+      data['uid'] = prefs.getString('uid');
+      var res = await addShoppingCart(data);
+      if (res['success']) {
+        Fluttertoast.showToast(msg: '添加成功~');
+        getShoppingCartList(context);
+      } else {
+        Fluttertoast.showToast(msg: '添加失败~');
+      }
+    } else {
+      Fluttertoast.showToast(msg: '请登录~');
+      Provider.of<AppState>(context).updateIsLogin(false);
+    }
+  }
+  
 }
 
 class LoadMoreView extends StatelessWidget {
