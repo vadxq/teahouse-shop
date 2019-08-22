@@ -15,7 +15,6 @@ module.exports = app => {
   // 所有用户（包含未登录用户）
   const allRole = app.middleware.allRole();
 
-  router.get('/', auth, controller.home.index);
   // 注册
   router.post('/v1/join', controller.v1.sign.signUp);
   // 登陆
