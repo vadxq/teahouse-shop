@@ -1,5 +1,5 @@
-// const serviceUrl = 'https://lucky.vadxq.com/api/v1';
-const serviceUrl = 'http://10.112.18.136:7001/api/v1';
+const serviceUrl = 'https://lucky.vadxq.com/api/v1';
+// const serviceUrl = 'http://10.112.18.136:7001/api/v1';
 const servicePath = {
   'homePageContext':
       'https://easy-mock.com/mock/5d368006bb81d863e0e34e70/lucky/swiper',
