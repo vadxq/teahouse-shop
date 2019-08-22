@@ -15,20 +15,19 @@ class _SplashPageState extends State<SplashPage>
         vsync: this, duration: Duration(milliseconds: 2500));
     _animation = Tween(begin: 0.50, end: 1.0).animate(_controller);
 
-    /*动画事件监听器，
-    它可以监听到动画的执行状态，
-    我们这里只监听动画是否结束，
-    如果结束则执行页面跳转动作。 */
+    // 监听动画
     _animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         Navigator.pushNamedAndRemoveUntil(
-            context, "IndexPage", (router) => router == null);
+            context, 'IndexPage', (router) => router == null);
       }
     });
-    //播放动画
+
+    // 播放动画
     _controller.forward();
   }
 
+  // 销毁
   @override
   void dispose() {
     _controller.dispose();
@@ -52,9 +51,20 @@ class _SplashPageState extends State<SplashPage>
           padding: EdgeInsets.fromLTRB(0, 0, 20, 30),
           child: Align(
             alignment: Alignment.bottomRight,
-            child: GestureDetector(
+            child: Container(
+              width: 60,
+              height: 30,
               child: new RaisedButton(
-                child: Text('跳过'),
+                color: Colors.white30,
+                padding: EdgeInsets.all(0),
+                child: Text(
+                  '跳过',
+                  style: TextStyle(
+                    color: Color.fromARGB(222, 0, 0, 0),
+                    fontSize: 12,
+                    // height: 1.4,
+                  ),
+                ),
                 onPressed: () {
                   Navigator.pushNamedAndRemoveUntil(
                       context, 'IndexPage', (router) => router == null);

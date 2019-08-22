@@ -28,14 +28,14 @@ class _HomePageState extends State<HomePage>
           child: new Column(children: [
         new Container(
           child: _swiperContainer(),
-          height: ScreenUtil().setHeight(620),
+          height: ScreenUtil().setWidth(800),
         ),
         new Container(
           child: Text(
             '新品推荐',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 16.0,
+              fontSize: ScreenUtil.getInstance().setWidth(38),
               height: 1.2,
             ),
           ),
@@ -47,13 +47,15 @@ class _HomePageState extends State<HomePage>
   }
 
   List _newDataList = [];
+
   @override
   void initState() {
-    loadData();
+    _loadData();
+    super.initState();
   }
 
   // 获取新品推荐数据
-  Future<Null> loadData() async {
+  Future<Null> _loadData() async {
     await Future.delayed(Duration(seconds: 2), () {
       getHomePageNew().then((data) => setState(() {
             _newDataList.clear();
@@ -67,7 +69,7 @@ class _HomePageState extends State<HomePage>
   }
 
   // 修改商品数量
-  changeCount(index, cart) {
+  _changeCount(index, cart) {
     setState(() {
       _newDataList[index]['cart'] = cart;
     });
@@ -85,7 +87,7 @@ class _HomePageState extends State<HomePage>
             shrinkWrap: true,
             children: <Widget>[
               Container(
-                height: ScreenUtil().setHeight(620),
+                height: ScreenUtil().setWidth(800),
                 width: ScreenUtil().setWidth(1068.6),
                 child: Swiper(
                   itemBuilder: (BuildContext context, int index) {
@@ -101,9 +103,13 @@ class _HomePageState extends State<HomePage>
           );
         } else {
           return Center(
-            child: Text('加载中...'),
+            child: Text(
+              '加载中...',
+              style: TextStyle(
+                fontSize: ScreenUtil.getInstance().setWidth(38),
+              ),
+            ),
           );
-          // return CupertinoActivityIndicator();
         }
       },
     );
@@ -116,10 +122,9 @@ class _HomePageState extends State<HomePage>
           child: ListView.builder(
               padding: EdgeInsets.only(top: 0),
               shrinkWrap: true,
-              // scrollDirection: Axis.vertical,
               itemCount: _newDataList.length,
               itemBuilder: (BuildContext context, int index) {
-                return getItem(_newDataList[index], index);
+                return _getItem(_newDataList[index], index);
               }));
     } else {
       // 加载菊花
@@ -128,138 +133,159 @@ class _HomePageState extends State<HomePage>
   }
 
   // 新品推荐-列表
-  getItem(subject, index) {
+  _getItem(subject, index) {
     var row = Container(
-        // padding: EdgeInsets.fromLTRB(0, 0, 0, 4),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.fromLTRB(10, 5, 5, 5),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(5.0),
-                    child: Image.network(
-                      subject['cover'],
-                      width: 80.0,
-                      height: 80.0,
-                      fit: BoxFit.fill,
-                      scale: 1.2,
-                    ),
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.fromLTRB(
+                    ScreenUtil.getInstance().setWidth(25),
+                    ScreenUtil.getInstance().setWidth(18),
+                    ScreenUtil.getInstance().setWidth(18),
+                    ScreenUtil.getInstance().setWidth(18)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: Image.network(
+                    subject['cover'],
+                    width: ScreenUtil.getInstance().setWidth(230),
+                    height: ScreenUtil.getInstance().setWidth(230),
+                    fit: BoxFit.fill,
+                    scale: 1.2,
                   ),
-
                 ),
-                Expanded(
+              ),
+              Expanded(
                   child: Container(
-                  margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
-                  height: 100.0,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        // padding: EdgeInsets.fromLTRB(30, 3, 30, 3),
-                        // color: Color.fromARGB(21, 0, 0, 0),
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          subject['title'],
+                margin: EdgeInsets.fromLTRB(
+                    ScreenUtil.getInstance().setWidth(28),
+                    ScreenUtil.getInstance().setWidth(28),
+                    ScreenUtil.getInstance().setWidth(28),
+                    ScreenUtil.getInstance().setWidth(28)),
+                height: ScreenUtil.getInstance().setWidth(300),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: Text(subject['title'],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            height: 1.2,
+                            height: 1.4,
+                            fontSize: ScreenUtil.getInstance().setWidth(38),
                           ),
                           textAlign: TextAlign.center,
                           maxLines: 1,
-                          overflow: TextOverflow.ellipsis
-                        ),
+                          overflow: TextOverflow.ellipsis),
+                    ),
+                    Text(
+                      '￥ ' + subject['price'].toString(),
+                      style: TextStyle(
+                        height: 1.4,
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.w600,
+                        fontSize: ScreenUtil.getInstance().setWidth(36),
                       ),
-                      Text(
-                        '￥ ' + subject['price'].toString(),
-                        style: TextStyle(
-                            height: 1.2,
-                            color: Colors.redAccent,
-                            fontWeight: FontWeight.w600,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    Text(
+                      subject['desc'],
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                      style: TextStyle(
+                        fontSize: ScreenUtil.getInstance().setWidth(36),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+              Container(
+                  height: 100,
+                  child: Column(
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          IconButton(
+                            padding: EdgeInsets.all(0),
+                            icon: Icon(
+                              Icons.remove,
+                              size: ScreenUtil.getInstance().setWidth(44),
+                            ),
+                            onPressed: () {
+                              if (subject['cart'] != 1) {
+                                print(subject['cart']);
+                                int cart = subject['cart'] - 1;
+                                _changeCount(index, cart);
+                              }
+                            },
                           ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                          Text(
+                            '${subject['cart']} 份',
+                            style: TextStyle(
+                              fontSize: ScreenUtil.getInstance().setWidth(36),
+                            ),
+                          ),
+                          IconButton(
+                            padding: EdgeInsets.all(0),
+                            icon: Icon(
+                              Icons.add,
+                              size: ScreenUtil.getInstance().setWidth(44),
+                            ),
+                            onPressed: () {
+                              subject['cart'] += 1;
+                              _changeCount(index, subject['cart']);
+                            },
+                          ),
+                        ],
                       ),
-                      Text(
-                        subject['desc'],
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
+                      Row(
+                        children: <Widget>[
+                          FlatButton(
+                            padding: EdgeInsets.all(0),
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  ' 加入 ',
+                                  style: TextStyle(
+                                    color: Color.fromARGB(222, 0, 0, 0),
+                                    fontSize:
+                                        ScreenUtil.getInstance().setWidth(40),
+                                    // height: 1.4,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.add_shopping_cart,
+                                  size: ScreenUtil.getInstance().setWidth(44),
+                                ),
+                              ],
+                            ),
+                            onPressed: () {
+                              showDialogWidget(subject, index);
+                            },
+                          ),
+                        ],
+                      )
                     ],
-                  ),
-                )),
-                Container(
-                    height: 100,
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: [
-                            IconButton(
-                              padding: EdgeInsets.all(0),
-                              icon: Icon(Icons.remove),
-                              onPressed: () {
-                                if (subject['cart'] != 1) {
-                                  print(subject['cart']);
-                                  int cart = subject['cart'] - 1;
-                                  changeCount(index, cart);
-                                }
-                              },
-                            ),
-                            Text('${subject['cart']} 份'),
-                            IconButton(
-                              padding: EdgeInsets.all(0),
-                              icon: Icon(Icons.add),
-                              onPressed: () {
-                                subject['cart'] += 1;
-                                changeCount(index, subject['cart']);
-                              },
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            FlatButton(
-                              padding: EdgeInsets.all(0),
-                              child: Row(
-                                children: <Widget>[
-                                  Text(
-                                    ' 加入 ',
-                                    style: TextStyle(
-                                      color: Color.fromARGB(222, 0, 0, 0),
-                                      fontSize: 16,
-                                      // height: 1.4,
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.add_shopping_cart,
-                                    size: 18,
-                                  ),
-                                ],
-                              ),
-                              onPressed: () {
-                                showDialogWidget(subject, index);
-                              },
-                            ),
-                          ],
-                        )
-                      ],
-                    ))
-              ],
-            ),
-          ],
-        ));
+                  ))
+            ],
+          ),
+        ],
+    ));
     return Card(
       child: row,
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+      margin: EdgeInsets.fromLTRB(
+          ScreenUtil.getInstance().setWidth(34),
+          ScreenUtil.getInstance().setWidth(24),
+          ScreenUtil.getInstance().setWidth(34),
+          ScreenUtil.getInstance().setWidth(24)),
       shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.only(
-          topLeft: new Radius.circular(10.0),
-          topRight: new Radius.circular(10.0),
-        )
-      ),
+          borderRadius: new BorderRadius.all(
+        new Radius.circular(ScreenUtil.getInstance().setWidth(40)),
+      )),
     );
   }
 
@@ -272,26 +298,35 @@ class _HomePageState extends State<HomePage>
             title: Text(
               '请确认',
               style: TextStyle(
-                fontSize: 16.0,
-                height: 1.2,
+                fontSize: ScreenUtil.getInstance().setWidth(38),
               ),
             ),
             content: Row(
               children: [
-                Text('${subject['title']}： ${subject['cart']}份'),
+                Text(
+                  '${subject['title']}： ${subject['cart']}份',
+                  style: TextStyle(
+                      fontSize: ScreenUtil.getInstance().setWidth(38)),
+                ),
               ],
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text('取消'),
+                child: Text(
+                  '取消',
+                  style: TextStyle(
+                      fontSize: ScreenUtil.getInstance().setWidth(38)),
+                ),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               FlatButton(
-                child: Text('添加'),
-                onPressed: () async{
-                  // ... 执行删除操作
+                child: Text(
+                  '添加',
+                  style: TextStyle(
+                      fontSize: ScreenUtil.getInstance().setWidth(38)),
+                ),
+                onPressed: () async {
                   _addItem(subject);
-                  
                   Navigator.of(context).pop(true);
                 },
               ),
@@ -300,10 +335,11 @@ class _HomePageState extends State<HomePage>
         });
   }
 
-  _addItem(data) async{
+  // 添加购物车
+  _addItem(data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print(prefs.getString('uid'));
-    if(prefs.getString('uid') != null) {
+    if (prefs.getString('uid') != null) {
       data['count'] = data['cart'];
       data['uid'] = prefs.getString('uid');
       var res = await addShoppingCart(data);
