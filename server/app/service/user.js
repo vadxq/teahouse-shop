@@ -7,12 +7,20 @@ const crypto = require('crypto');
  * @param app.Service signUp and signIn
  */
 class UserService extends Service {
-  // 签名
+  /**
+   * 签名
+   * @param {Object} user - {}
+   * @return {Object} - return data
+   */
   generateToken(user) {
     return this.ctx.app.jwt.sign({ uid: user.uid, role: user.role, exp: Date.now() + 24 * 60 * 60 * 1000 }, this.ctx.app.config.jwt.secret);
   }
 
-  // 注册
+  /**
+   * 注册
+   * @param {Object} req - {}
+   * @return {Object} - return data
+   */
   async signUp(req) {
     if (req.uid.length < 5 || !/^[a-zA-Z0-9_-]{4,16}$/.test(req.uid)) {
       return {
@@ -58,7 +66,11 @@ class UserService extends Service {
     };
   }
 
-  // 登陆
+  /**
+   * 登陆
+   * @param {Object} req - {}
+   * @return {Object} - return data
+   */
   async signIn(req) {
     const user = await this.ctx.model.User.findOne({ uid: req.uid });
     if (user) {

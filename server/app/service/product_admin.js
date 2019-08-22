@@ -9,23 +9,17 @@ class ProductAdminService extends Service {
    * @return {Object} - return data
    */
   async addProduct(req) {
-    // req.count = req.total;
     if (req.title.length === 0) return { status: 0, res: '请提交商品名称' };
     if (req.price.length === 0 || isNaN(+req.price)) return { status: 0, res: '价格格式错误' };
     if (req.cover.length === 0) return { status: 0, res: '请提交商品封面图' };
     if (req.desc.length === 0) return { status: 0, res: '请提交商品描述' };
-    // if (req.new.length === 0) return { status: 0, res: '请提交商品名称' };
-    // if (req.recommend.length === 0) return { status: 0, res: '请提交商品名称' };
     const product = this.ctx.model.Product({
       title: req.title,
       desc: req.desc,
       cover: req.cover,
-      // detail: req.detail,
-      // total: req.total,
       price: req.price,
       new: req.new,
       recommend: req.recommend,
-      // count: req.count,
     });
     const res = await product.save();
     if (res) {
@@ -52,8 +46,8 @@ class ProductAdminService extends Service {
       title: req.title,
       desc: req.desc,
       cover: req.cover,
-      // detail: req.detail,
-      // total: req.total,
+      detail: req.detail,
+      total: req.total,
       price: req.price,
       new: req.new,
       recommend: req.recommend,
