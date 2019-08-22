@@ -59,11 +59,10 @@ class _HomePageState extends State<HomePage>
     await Future.delayed(Duration(seconds: 2), () {
       getHomePageNew().then((data) => setState(() {
             _newDataList.clear();
-            // var res = data['data']['data'];
-            for (var item in data['data']['data']) {
+            for (var item in data['data']) {
               item['cart'] = 1;
             }
-            _newDataList = data['data']['data'];
+            _newDataList = data['data'];
           }));
     });
   }

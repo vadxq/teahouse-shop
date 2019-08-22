@@ -28,7 +28,7 @@ Future getHomePageNew() async {
   try {
     Response response;
     Dio dio = new Dio();
-    response = await dio.get(servicePath['homePageNew']);
+    response = await dio.post(servicePath['homePageNew'], data: { 'new': true, 'recommend': true });
     if (response.statusCode == 200) {
       return response.data;
     } else {
