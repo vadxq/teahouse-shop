@@ -31,13 +31,6 @@
         </a-input>
         <a-alert v-if="signinPhoneRegex" message="手机号错误" banner />
       </a-form-item>
-      <!-- <a-form-item label="收货地址">
-        <a-input type="text" size="large" placeholder="请输入收货地址" >
-          <a-icon slot="prefix" type="shop" />
-        </a-input>
-        <a-alert v-if="signinPhoneRegex" message="手机号错误" banner />
-      </a-form-item> -->
-
       <a-form-item>
         <a-button
           :loading="logguping"
@@ -98,6 +91,7 @@ export default {
     };
   },
   computed: {
+    // 个人信息
     userInfo() {
       return this.$store.state.user
     },
@@ -110,9 +104,11 @@ export default {
         || this.userInfo.email === ''
         || this.userInfo.username === ''
     },
+    // 邮箱验证
     signinMailRegex() {
       return this.userInfo.email !== '' && !/^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i.test(this.userInfo.email)
     },
+    // 手机号验证
     signinPhoneRegex() {
       return this.userInfo.phone !== '' && !/^[1]([3-9])[0-9]{9}$/.test(this.userInfo.phone)
     },
@@ -123,20 +119,25 @@ export default {
         || this.newPassword === ''
         || this.againPass === ''
     },
+    // 旧密码参数
     oldPasswordRegex() {
       return this.oldPassword !== '' && /[\u4e00-\u9fa5]/.test(this.oldPassword)
     },
+    // 新密码参数
     newPasswordRegex() {
       return this.newPassword !== '' && /[\u4e00-\u9fa5]/.test(this.newPassword)
     },
+    // 确认密码参数
     againPassRegex() {
       return this.againPass !== '' && this.againPass !== this.newPassword
     },
+    // 所有密码格式
     allpassRegex() {
       return this.newPassword === this.oldPassword && this.newPassword !== '' && this.oldPassword !== ''
     }
   },
   methods: {
+    // 修改个人信息
     async changeInfo() {
       this.logging = true;
       let res = await this.$http.put('/api/v1/user/info', {
@@ -152,6 +153,7 @@ export default {
       }
       this.logging = false;
     },
+    // 修改密码
     async changePass() {
       let res = await this.$http.post('/api/v1/user/pass', {
         oldPassword: this.oldPassword,
@@ -176,8 +178,6 @@ export default {
   display: flex;
   flex-direction: row;
 }
-
-
 .change-pass {
   width: 30%;
   margin: 0 0 0 40px;
@@ -185,7 +185,6 @@ export default {
 .user-info {
   flex: 1;
 }
-
 @media screen and (max-width: 576px) {
   .login {
     width: 95%;
@@ -210,5 +209,4 @@ export default {
 .ant-form-item {
   margin-bottom: 0;
 }
-
 </style>

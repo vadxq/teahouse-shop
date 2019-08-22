@@ -3,15 +3,14 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-
 export default new Router({
   mode: 'history',
   routes: [
-    {
+    { // 根路由
       path: '/',
       component: () => import('./views/Home.vue'),
       children: [
-        {
+        { // 首页
           path: '',
           name: 'index',
           meta: {
@@ -19,7 +18,7 @@ export default new Router({
           },
           component: () => import('./views/Index.vue')
         },
-        {
+        { // 商品列表
           path: '/product',
           name: 'product',
           meta: {
@@ -27,7 +26,7 @@ export default new Router({
           },
           component: () => import('./views/Product.vue')
         },
-        {
+        { // 添加商品
           path: '/new',
           name: 'newProduct',
           meta: {
@@ -35,7 +34,7 @@ export default new Router({
           },
           component: () => import('./views/New.vue')
         },
-        {
+        { // 订单列表
           path: '/order',
           name: 'order',
           meta: {
@@ -43,7 +42,7 @@ export default new Router({
           },
           component: () => import('./views/Order.vue')
         },
-        {
+        { // 搜索订单
           path: '/search',
           name: 'search',
           meta: {
@@ -51,7 +50,7 @@ export default new Router({
           },
           component: () => import('./views/Search.vue')
         },
-        {
+        { // 会员管理
           path: '/member',
           name: 'member',
           meta: {
@@ -59,7 +58,7 @@ export default new Router({
           },
           component: () => import('./views/Member.vue')
         },
-        {
+        { // 工作人员
           path: '/worker',
           name: 'worker',
           meta: {
@@ -67,7 +66,7 @@ export default new Router({
           },
           component: () => import('./views/Worker.vue')
         },
-        {
+        { // 个人中心
           path: '/profile',
           name: 'profile',
           meta: {
@@ -77,7 +76,7 @@ export default new Router({
         }
       ]
     },
-    {
+    { // 登陆注册
       path: '/login',
       name: 'login',
       component: () => import('./views/Login.vue')

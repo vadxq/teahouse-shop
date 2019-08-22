@@ -54,24 +54,6 @@
           </template>
         </a-table-column>
       </a-table>
-      <!-- <div class="pagination-container">
-        <a-button-group>
-        <a-button
-          :disabled="$store.state.members.currentPage === 1"
-          type="primary"
-          size="small"
-          @click="changePage(+$store.state.members.currentPage - 1)">
-          <a-icon type="left" />
-        </a-button>
-        <a-button size="small" disabled="true">{{$store.state.members.currentPage}} / {{$store.state.members.pages}}</a-button>
-        <a-button
-          :disabled="$store.state.members.pages === $store.state.members.currentPage"
-          type="primary"
-          size="small"
-          @click="changePage($store.state.members.currentPage + 1)">
-          <a-icon type="right" />
-        </a-button>
-      </a-button-group> -->
       <div class="pagination-container" v-if="$store.state.members.pages > 1">
         <a-button-group v-if="$store.state.members.pages > 0">
           <a-button
@@ -152,15 +134,15 @@ export default {
 </script>
 
 <style scoped>
-  .pagination-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  button[ant-click-animating-without-extra-node]:after {
-    border: 0 none;
-    opacity: 0;
-    animation:none 0 ease 0 1 normal;
-  }
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+button[ant-click-animating-without-extra-node]:after {
+  border: 0 none;
+  opacity: 0;
+  animation:none 0 ease 0 1 normal;
+}
 </style>

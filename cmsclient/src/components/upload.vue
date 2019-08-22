@@ -23,6 +23,7 @@ export default {
     };
   },
   methods: {
+    // 七牛上传文件方法
     async upload () {
       let res = await this.$http.post('/api/v1/admin/qiniu', { bucket: this.bucket })
       if (res.data.status) {
@@ -103,7 +104,6 @@ export default {
   font-size: 32px;
   color: #999;
 }
-
 .ant-upload-select-picture-card .ant-upload-text {
   margin-top: 8px;
   color: #666;

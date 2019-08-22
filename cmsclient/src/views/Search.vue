@@ -57,7 +57,7 @@
         />
         <a-table-column
           title="操作"
-          v-if="$store.state.user.role === 100"
+          v-if="$store.state.user.role === 9"
         >
           <template slot-scope="text, record">
             <span>
@@ -163,17 +163,15 @@ export default {
     },
   },
   mounted() {
-    
   },
 }
 </script>
 
-
 <style scoped>
- .search-bottom {
-   display: flex;
-   justify-content: center;
-   width: 100%;
-   margin: 20px 0;
- }
+.search-bottom {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 20px 0;
+}
 </style>

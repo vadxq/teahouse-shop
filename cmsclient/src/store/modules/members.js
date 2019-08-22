@@ -1,7 +1,7 @@
 import axios from '../../lib/axios'
 // initial state
 const state = {
-  members: [],
+  members: [], // 成员列表
   pages: 1,
   currentPage: 1
 }
@@ -19,10 +19,6 @@ const actions = {
       commit('setMember', res.data.data)
     }
   },
-  // async changeMemberItem({ commit }, payload) {
-  //   console.log(payload)
-  //   let 
-  // }
 }
 
 // mutations

@@ -60,6 +60,7 @@ export default {
     };
   },
   computed: {
+    // 默认初始路由，nav对应
     defaultRoute() {
       if (this.$route.path === '/product') return { selectKey: 'product', openKey: 'sub2' };
       if (this.$route.path === '/new') return { selectKey: 'new', openKey: 'sub2' };
