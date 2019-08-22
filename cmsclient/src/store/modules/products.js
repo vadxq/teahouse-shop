@@ -1,9 +1,9 @@
 import axios from '../../lib/axios'
 // initial state
 const state = {
-  products: [],
-  pages: 1,
-  currentPage: 1,
+  products: [], // 当前商品列表
+  pages: 1, // 总页码
+  currentPage: 1, // 当前页码
 }
 
 // getters

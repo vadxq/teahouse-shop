@@ -1,10 +1,10 @@
 import axios from '../../lib/axios'
 // initial state
 const state = {
-  orders: [],
+  orders: [], // 订单列表
   pages: 1,
   currentPage: 1,
-  search: {
+  search: { // 搜索订单信息
     orders: [],
     pages: 1,
     currentPage: 1,

@@ -75,6 +75,7 @@ export default {
     }
   },
   methods: {
+    // 添加商品
     async pushShopItem() {
       if (isNaN(+this.product.price)) {
         this.$message.error('价格格式错误')
@@ -101,7 +102,6 @@ export default {
         }
         this.loding = true
       }
-      // if ()
     }
   },
   mounted() {}
@@ -109,9 +109,9 @@ export default {
 </script>
 
 <style scoped>
- .loading {
-   text-align: center;
-   margin-top:30px;
-   position: fixed;
- }
+.loading {
+  text-align: center;
+  margin-top:30px;
+  position: fixed;
+}
 </style>

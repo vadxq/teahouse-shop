@@ -33,7 +33,6 @@
               </a-form-item>
               <div>
                 <a-checkbox v-model="isSave">自动登录</a-checkbox>
-                <!-- <a style="float: right">忘记密码</a> -->
               </div>
               <a-form-item>
                 <a-button
@@ -143,9 +142,11 @@ export default {
     loginUidRegex() {
       return this.login.uid.length > 4 && !/^[a-zA-Z0-9_-]{4,16}$/.test(this.login.uid)
     },
+    // 控制登陆账户过短
     loginUidShortRegex() {
       return this.login.uid!== '' && this.login.uid.length < 5
     },
+    // 控制登陆密码参数
     loginPWRegex() {
       return this.login.password !== '' && /[\u4e00-\u9fa5]/.test(this.login.password)
     },
@@ -153,24 +154,29 @@ export default {
     signinMailRegex() {
       return this.signinData.email !== '' && !/^([\w-_]+(?:\.[\w-_]+)*)@((?:[a-z0-9]+(?:-[a-zA-Z0-9]+)*)+\.[a-z]{2,6})$/i.test(this.signinData.email)
     },
+    // 注册账户参数
     signinUidRegex() {
       return this.signinData.uid.length > 4 && !/^[a-zA-Z0-9_-]{4,16}$/.test(this.signinData.uid)
     },
+    // 登陆账户过短
     signinUidShortRegex() {
       return this.signinData.uid!== '' && this.signinData.uid.length < 5
     },
+    // 注册手机号
     signinPhoneRegex() {
       return this.signinData.phone !== '' && !/^[1]([3-9])[0-9]{9}$/.test(this.signinData.phone)
     },
+    // 注册密码
     signinPasswordRegex() {
       return this.signinData.password !== '' && /[\u4e00-\u9fa5]/.test(this.signinData.password)
     },
+    // 确认密码
     againPassRegex() {
       return this.againPass !== '' && this.againPass !== this.signinData.password
     }
-
   },
   methods: {
+    // 登录
     async signUp() {
       this.logging = true;
       let res = await this.$http.post('/api/v1/login', this.login);
@@ -188,22 +194,16 @@ export default {
       }
       this.logging = false;
     },
+    // 注册
     async signIn() {
       this.logguping = true;
       let res = await this.$http.post('/api/v1/join', this.signinData);
       if (res.data.success) {
-        // localStorage.setItem('token', res.data.data.token);
-        // if (this.isSave) {
-        //   localStorage.setItem('uid', this.login.uid)
-        //   localStorage.setItem('id', btoa(this.login.password))
-        // }
-        // this.$store.dispatch('user/getUserInfo');
-        // this.$router.push(this.$route.query.redirect || '/');
-        this.$message.success('注册成功！', 3);
-        // this.$message.success(res.data.message)
+        this.$message.success('注册成功', 3);
       } else {
         this.$message.error(res.data.message);
       }
+      this.logging = false;
     },
   },
   mounted() {

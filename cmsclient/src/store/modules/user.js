@@ -24,9 +24,6 @@ const actions = {
       commit('setUserInfo', res.data.data)
     }
   },
-  // async getUserProfile({ commit }){
-  //   let res = await axios.get(`/api/v1/user`)
-  // }
 }
 
 // mutations

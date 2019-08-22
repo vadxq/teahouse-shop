@@ -42,7 +42,8 @@
     </a-layout-content>
     <a-layout-footer style="text-align: center">
       ©2019 Created by
-      <a href="https://blog.vadxq.com">xianlin.dong</a>
+      <a href="https://blog.vadxq.com">vadxq</a>.
+      <a href="https://github.vadxq.com/vadxq/teahouse">Github</a>.
     </a-layout-footer>
   </a-layout>
 </template>
@@ -58,6 +59,7 @@ export default {
     return {};
   },
   methods: {
+    // 清楚登陆信息
     clearLogin() {
       localStorage.removeItem('token')
       localStorage.removeItem('uid')
@@ -69,9 +71,6 @@ export default {
       return `/login?redirect=${this.$route.path}`
     }
   },
-  mounted() {
-    // console.log(this.$http.get())
-  }
 };
 </script>
 

@@ -1,7 +1,7 @@
 // initial state
 const state = {
-  fileUrl: '',
-  fileName: ''
+  fileUrl: '', // 七牛文件链接
+  fileName: '' // 七牛文件名称
 }
 
 // getters

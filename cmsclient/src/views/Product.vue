@@ -142,8 +142,9 @@ export default {
       req.new = !req.new
       this.putItem(req)
     },
+    // 删除商品
     async delProduct(pid) {
-      let res = await this.$http.delete(`/api/v1/admin/product/:${pid}`)
+      let res = await this.$http.delete(`/api/v1/admin/product/${pid}`)
       if (res.data.success) {
         this.$store.dispatch('products/getAllProduct', { page: this.$store.state.products.currentPage, limit: 10 })
         this.$message.success('删除成功')
@@ -162,21 +163,21 @@ export default {
 </script>
 
 <style scoped>
-  .pagination-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  button[ant-click-animating-without-extra-node]:after {
-    border: 0 none;
-    opacity: 0;
-    animation:none 0 ease 0 1 normal;
-  }
-  .del-red-button {
-    background-color: red;
-    color: #fff;
-    padding: 0 3px;
-    border-radius: 5px;
-  }
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+button[ant-click-animating-without-extra-node]:after {
+  border: 0 none;
+  opacity: 0;
+  animation:none 0 ease 0 1 normal;
+}
+.del-red-button {
+  background-color: red;
+  color: #fff;
+  padding: 0 3px;
+  border-radius: 5px;
+}
 </style>

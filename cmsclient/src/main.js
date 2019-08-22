@@ -12,7 +12,6 @@ Vue.config.productionTip = false
 Vue.use(Antd)
 
 Vue.prototype.$http = axios
-// Vue.use(axios)
 Vue.prototype.$message.config({
   duration: 4,
 });

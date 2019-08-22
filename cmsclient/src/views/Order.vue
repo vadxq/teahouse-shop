@@ -45,7 +45,7 @@
         />
         <a-table-column
           title="操作"
-          v-if="$store.state.user.role === 100"
+          v-if="$store.state.user.role > 9"
         >
           <template slot-scope="text, record">
             <span>
@@ -123,6 +123,7 @@ export default {
         this.$message.error(res.data.message)
       }
     },
+    // 获取新订单，轮询
     getNewOrder(){
       setInterval(() => {
         if (this.$route.path === '/order') {
@@ -145,21 +146,21 @@ export default {
 </script>
 
 <style scoped>
-  .pagination-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  button[ant-click-animating-without-extra-node]:after {
-    border: 0 none;
-    opacity: 0;
-    animation:none 0 ease 0 1 normal;
-  }
-  .del-red-button {
-    background-color: red;
-    color: #fff;
-    padding: 0 3px;
-    border-radius: 5px;
-  }
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+button[ant-click-animating-without-extra-node]:after {
+  border: 0 none;
+  opacity: 0;
+  animation:none 0 ease 0 1 normal;
+}
+.del-red-button {
+  background-color: red;
+  color: #fff;
+  padding: 0 3px;
+  border-radius: 5px;
+}
 </style>

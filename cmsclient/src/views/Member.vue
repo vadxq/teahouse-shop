@@ -46,8 +46,6 @@
               <a slot="action" v-if="record.status" @click="changeStatus(record.uid, !record.status)">禁用</a>
               <a slot="action" v-if="!record.status" @click="changeStatus(record.uid, !record.status)">恢复</a>
               <a-divider type="vertical" />
-              <!-- <a slot="action" v-if="record.role === 10" @click="changeRole(100)">设为管理员</a>
-              <a slot="action" v-if="record.role === 100" @click="changeRole(10)">设为工作人员</a> -->
               <a slot="action" v-if="record.role < 10" @click="changeRole(record.uid, 10)">提升权限</a>
             </span>
           </template>
@@ -133,15 +131,15 @@ export default {
 </script>
 
 <style scoped>
-  .pagination-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  button[ant-click-animating-without-extra-node]:after {
-    border: 0 none;
-    opacity: 0;
-    animation:none 0 ease 0 1 normal;
-  }
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+button[ant-click-animating-without-extra-node]:after {
+  border: 0 none;
+  opacity: 0;
+  animation:none 0 ease 0 1 normal;
+}
 </style>

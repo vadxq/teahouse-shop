@@ -8,7 +8,6 @@ message.config({
 
 // axios 配置
 axios.defaults.timeout = 5000
-// axios.defaults.baseURL = ''
 
 // http request 拦截器
 axios.interceptors.request.use(
@@ -80,7 +79,6 @@ axios.interceptors.response.use(
       }
     }
     message.error(error.response.data.message)
-    // return Promise.reject(error.response.data)
     return error.response
   },
 )
