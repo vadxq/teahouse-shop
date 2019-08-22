@@ -35,7 +35,7 @@ class ProductAdminService extends Service {
   }
 
   /**
-   * add product
+   * change product
    * @param {Object} req - { title, desc, cover, detail, total, price, new, recommend, pid }
    * @return {Object} - return data
    */
@@ -46,8 +46,7 @@ class ProductAdminService extends Service {
       title: req.title,
       desc: req.desc,
       cover: req.cover,
-      detail: req.detail,
-      total: req.total,
+      // total: req.total,
       price: req.price,
       new: req.new,
       recommend: req.recommend,

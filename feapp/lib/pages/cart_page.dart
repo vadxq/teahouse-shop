@@ -138,14 +138,14 @@ class _CartPageState extends State<CartPage> {
                           fontSize: ScreenUtil.getInstance().setWidth(38)),
                     ),
                     Text(
-                      Provider.of<AppState>(context).totalSale.toString() + ' ',
+                      Provider.of<AppState>(context).totalSale.toStringAsFixed(2) + ' ',
                       style: TextStyle(
                         color: Colors.red,
                         fontSize: ScreenUtil.getInstance().setWidth(42),
                       ),
                     ),
                     Text(
-                      Provider.of<AppState>(context).totalPrice.toString(),
+                      Provider.of<AppState>(context).totalPrice.toStringAsFixed(2),
                       style: TextStyle(
                         color: Colors.red,
                         decoration: TextDecoration.lineThrough,
@@ -219,7 +219,7 @@ class _CartPageState extends State<CartPage> {
                 children: [
                   Text(
                     '总计支付￥：' +
-                        Provider.of<AppState>(context).totalSale.toString(),
+                        Provider.of<AppState>(context).totalSale.toStringAsFixed(2),
                     style: TextStyle(
                         fontSize: ScreenUtil.getInstance().setWidth(38)),
                   ),
