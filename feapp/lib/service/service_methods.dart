@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
-// import 'dart:io';
 import './../config/service_url.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:feapp/provides/app_state.dart';
@@ -19,7 +18,7 @@ Future getHomePageContent() async {
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
@@ -35,7 +34,7 @@ Future getHomePageNew() async {
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
@@ -47,43 +46,42 @@ Future getMenuPageList(data) async {
     Dio dio = new Dio();
     response = await dio.get(
       '${servicePath['menuPageList']}?page=${data['page']}&limit=${data['limit']}',
-      // options: Options(headers: {'Authorization': await _getData(), 'connectTimeout': 15000}),
-      );
+    );
     if (response.statusCode == 200) {
       return response.data;
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
 
 // 获取购物车列表
-Future getShoppingCartList(context) async{
+Future getShoppingCartList(context) async {
   try {
     Response response;
     Dio dio = new Dio();
     response = await dio.get(
       '${servicePath['shoppingCartList']}',
-      options: Options(headers: {'Authorization': await _getData(), 'connectTimeout': 15000}),
+      options: Options(headers: {
+        'Authorization': await _getData(),
+        'connectTimeout': 15000
+      }),
     );
     print(await _getData());
     if (response.statusCode == 200) {
-      if(response.data['success']) {
-        Provider.of<AppState>(context).updateShoppingCart(response.data['data']['items']);
+      if (response.data['success']) {
+        Provider.of<AppState>(context)
+            .updateShoppingCart(response.data['data']['items']);
       } else {
         if (response.data['status'] == 403 || response.data['status'] == 401) {
-          // Navigator.pushNamedAndRemoveUntil(
-          //   context, 'SignPage', (router) => router == null);
           _removeData(context);
           Fluttertoast.showToast(msg: '登录过期');
         } else {
           Fluttertoast.showToast(msg: response.data['message']);
         }
       }
-      print(response);
-      // return response.data;
     } else {
       throw Exception('err');
     }
@@ -96,16 +94,14 @@ Future getShoppingCartList(context) async{
 Future loginPageData(data) async {
   try {
     Response response;
-    print(data);
     Dio dio = new Dio();
     response = await dio.post(servicePath['loginPage'], data: data);
-    print(response);
     if (response.statusCode == 200) {
       return response.data;
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
@@ -121,7 +117,7 @@ Future joinPageData(data) async {
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
@@ -134,14 +130,17 @@ Future addShoppingCart(data) async {
     response = await dio.post(
       servicePath['shoppingCartList'],
       data: data,
-      options: Options(headers: {'Authorization': await _getData(), 'connectTimeout': 15000}),
+      options: Options(headers: {
+        'Authorization': await _getData(),
+        'connectTimeout': 15000
+      }),
     );
     if (response.statusCode == 200) {
       return response.data;
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
@@ -151,23 +150,28 @@ Future deleteShoppingCart(data, context) async {
   try {
     Response response;
     Dio dio = new Dio();
-    response = await dio.delete(servicePath['shoppingCartList']+'/' + data,
-    options: Options(headers: {'Authorization': await _getData(), 'connectTimeout': 15000}),);
+    response = await dio.delete(
+      servicePath['shoppingCartList'] + '/' + data,
+      options: Options(headers: {
+        'Authorization': await _getData(),
+        'connectTimeout': 15000
+      }),
+    );
     if (response.statusCode == 200) {
-      if(response.data['success']) {
+      if (response.data['success']) {
         getShoppingCartList(context);
         return response.data;
       } else {
         if (response.data['status'] == 403 || response.data['status'] == 401) {
           Navigator.pushNamedAndRemoveUntil(
-            context, 'SignPage', (router) => router == null);
+              context, 'SignPage', (router) => router == null);
         }
         Fluttertoast.showToast(msg: response.data['message']);
       }
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
@@ -177,23 +181,29 @@ Future putShoppingCart(data, context) async {
   try {
     Response response;
     Dio dio = new Dio();
-    response = await dio.put(servicePath['shoppingCartList'], data: data,
-    options: Options(headers: {'Authorization': await _getData(), 'connectTimeout': 15000}),);
+    response = await dio.put(
+      servicePath['shoppingCartList'],
+      data: data,
+      options: Options(headers: {
+        'Authorization': await _getData(),
+        'connectTimeout': 15000
+      }),
+    );
     if (response.statusCode == 200) {
-      if(response.data['success']) {
+      if (response.data['success']) {
         getShoppingCartList(context);
         return response.data;
       } else {
         if (response.data['status'] == 403 || response.data['status'] == 401) {
           Navigator.pushNamedAndRemoveUntil(
-            context, 'SignPage', (router) => router == null);
+              context, 'SignPage', (router) => router == null);
         }
         Fluttertoast.showToast(msg: response.data['message']);
       }
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
@@ -203,24 +213,29 @@ Future makeOrderItem(data, context) async {
   try {
     Response response;
     Dio dio = new Dio();
-    print(data);
-    response = await dio.post(servicePath['makeOrder'], data: data,
-    options: Options(headers: {'Authorization': await _getData(), 'connectTimeout': 15000}),);
+    response = await dio.post(
+      servicePath['makeOrder'],
+      data: data,
+      options: Options(headers: {
+        'Authorization': await _getData(),
+        'connectTimeout': 15000
+      }),
+    );
     if (response.statusCode == 200) {
-      if(response.data['success']) {
+      if (response.data['success']) {
         getShoppingCartList(context);
         return response.data;
       } else {
         if (response.data['status'] == 403 || response.data['status'] == 401) {
           Navigator.pushNamedAndRemoveUntil(
-            context, 'SignPage', (router) => router == null);
+              context, 'SignPage', (router) => router == null);
         }
         Fluttertoast.showToast(msg: response.data['message']);
       }
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
@@ -230,16 +245,21 @@ Future getMyOrderList(uid, context) async {
   try {
     Response response;
     Dio dio = new Dio();
-    response = await dio.get(servicePath['getOrders'] + uid,
-    options: Options(headers: {'Authorization': await _getData(), 'connectTimeout': 15000}),);
+    response = await dio.get(
+      servicePath['getOrders'] + uid,
+      options: Options(headers: {
+        'Authorization': await _getData(),
+        'connectTimeout': 15000
+      }),
+    );
     if (response.statusCode == 200) {
       // print(response);
-      if(response.data['success']) {
+      if (response.data['success']) {
         return response.data;
       } else {
         if (response.data['status'] == 403 || response.data['status'] == 401) {
           Navigator.pushNamedAndRemoveUntil(
-            context, 'SignPage', (router) => router == null);
+              context, 'SignPage', (router) => router == null);
         }
         Fluttertoast.showToast(msg: response.data['message']);
       }
@@ -256,23 +276,28 @@ Future changePass(data, context) async {
   try {
     Response response;
     Dio dio = new Dio();
-    print(data);
-    response = await dio.post(servicePath['userPass'], data: data,
-    options: Options(headers: {'Authorization': await _getData(), 'connectTimeout': 15000}),);
+    response = await dio.post(
+      servicePath['userPass'],
+      data: data,
+      options: Options(headers: {
+        'Authorization': await _getData(),
+        'connectTimeout': 15000
+      }),
+    );
     if (response.statusCode == 200) {
-      if(response.data['success']) {
+      if (response.data['success']) {
         return response.data;
       } else {
         if (response.data['status'] == 403 || response.data['status'] == 401) {
           Navigator.pushNamedAndRemoveUntil(
-            context, 'SignPage', (router) => router == null);
+              context, 'SignPage', (router) => router == null);
         }
         Fluttertoast.showToast(msg: response.data['message']);
       }
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
@@ -282,22 +307,29 @@ Future getUserInfo(context) async {
   try {
     Response response;
     Dio dio = new Dio();
-    response = await dio.get(servicePath['userInfo'],
-    options: Options(headers: {'Authorization': await _getData(), 'connectTimeout': 15000}),);
+    response = await dio.get(
+      servicePath['userInfo'],
+      options: Options(headers: {
+        'Authorization': await _getData(),
+        'connectTimeout': 15000
+      }),
+    );
     if (response.statusCode == 200) {
-      if(response.data['success']) {
+      if (response.data['success']) {
+        Provider.of<AppState>(context)
+            .updateLevel(response.data['data']['score']);
         return response.data;
       } else {
         if (response.data['status'] == 403 || response.data['status'] == 401) {
           Navigator.pushNamedAndRemoveUntil(
-            context, 'SignPage', (router) => router == null);
+              context, 'SignPage', (router) => router == null);
         }
         Fluttertoast.showToast(msg: response.data['message']);
       }
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
@@ -307,33 +339,41 @@ Future changeUserInfo(data, context) async {
   try {
     Response response;
     Dio dio = new Dio();
-    print(data);
-    response = await dio.put(servicePath['userInfo'], data: data,
-    options: Options(headers: {'Authorization': await _getData(), 'connectTimeout': 15000}),);
+    response = await dio.put(
+      servicePath['userInfo'],
+      data: data,
+      options: Options(headers: {
+        'Authorization': await _getData(),
+        'connectTimeout': 15000
+      }),
+    );
     if (response.statusCode == 200) {
-      if(response.data['success']) {
+      if (response.data['success']) {
         return response.data;
       } else {
         if (response.data['status'] == 403 || response.data['status'] == 401) {
           Navigator.pushNamedAndRemoveUntil(
-            context, 'SignPage', (router) => router == null);
+              context, 'SignPage', (router) => router == null);
         }
         Fluttertoast.showToast(msg: response.data['message']);
       }
     } else {
       throw Exception('err');
     }
-  } catch(e) {
+  } catch (e) {
     print(e);
   }
 }
 
-Future _getData() async{
+// 获取 token
+Future _getData() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return 'bearer ' + prefs.getString('token');
 }
-_removeData(context) async{
-  SharedPreferences prefs =await SharedPreferences.getInstance();
+
+// 去除登陆状态
+_removeData(context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove('token');
   prefs.remove('uid');
   Provider.of<AppState>(context).updateIsLogin(false);
