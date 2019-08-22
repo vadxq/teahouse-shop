@@ -5,10 +5,6 @@
  */
 const { Controller } = require('egg');
 class BaseController extends Controller {
-  // getUser() {
-  //   return this.ctx.session.user;
-  // }
-
   success(data) {
     this.ctx.body = {
       data,

@@ -17,7 +17,6 @@ module.exports = app => {
     password: { type: String }, // 密码
     avtor: { type: String, default: 'https://qnimg.vadxq.com/blog/2016/blogheadimg20160517.jpg' }, // 头像
     score: { type: Number, default: 0 }, // 积分
-    // total_score: { type: Number }, // 累计积分
     role: { type: Number, default: 0 }, // 权限;0,普通用户;10,工作人员;100,超级管理员
     status: { type: Boolean, default: true }, // 账号是否可用
     registerAt: { type: Date, default: Date.now() }, // 注册时间

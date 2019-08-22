@@ -1,9 +1,9 @@
 FROM node:latest
 
-Run mkdir -p /teahouse_shop
-WORKDIR /teahouse_shop
+Run mkdir -p /ttp5-luckyshop-xianlin.dong
+WORKDIR /ttp5-luckyshop-xianlin.dong
 
-COPY . /teahouse_shop
+COPY . /ttp5-luckyshop-xianlin.dong
 RUN npm install
 
 ENV NODE_ENV=production

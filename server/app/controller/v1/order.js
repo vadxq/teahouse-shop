@@ -101,7 +101,6 @@ class ShoppingCartController extends Controller {
    * oid
    */
   async getMyOrder() {
-    // page: 页数;limit
     const { uid } = this.ctx.params;
     console.log(uid);
     if (!uid) {
