@@ -1,5 +1,4 @@
 /* eslint valid-jsdoc: "off" */
-
 'use strict';
 
 const secConfig = require('./port');
@@ -28,7 +27,6 @@ module.exports = appInfo => {
 
   // add your middleware config here
   config.middleware = [];
-  // config.middleware = [ 'auth' ];
 
   // mongoose config here
   config.mongoose = {
@@ -50,7 +48,6 @@ module.exports = appInfo => {
 
   // add your user config here
   const userConfig = {
-    // myAppName: 'egg',
   };
 
   return {

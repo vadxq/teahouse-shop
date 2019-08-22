@@ -1,13 +1,10 @@
 FROM node:latest
 
-Run mkdir -p /teahouse_shop
-WORKDIR /teahouse_shop
+Run mkdir -p /teahouse
+WORKDIR /teahouse
 
-COPY . /teahouse_shop
+COPY . /teahouse
 RUN npm install
-
-ENV NODE_ENV=production
-ENV HOST 0.0.0.0
 
 EXPOSE 7001
 

@@ -15,7 +15,6 @@ module.exports = app => {
   // 所有用户（包含未登录用户）
   const allRole = app.middleware.allRole();
 
-  router.get('/', auth, controller.home.index);
   // 注册
   router.post('/v1/join', controller.v1.sign.signUp);
   // 登陆
@@ -41,12 +40,12 @@ module.exports = app => {
   router.put('/v1/admin/product', auth, adminRole, controller.v1.productAdmin.changeProduct);
   // admin，商品删除
   router.delete('/v1/admin/product/:pid', auth, adminRole, controller.v1.productAdmin.deleteProduct);
-  // admin，商品上架下架
-  // router.put('/v1/admin/product', auth, adminRole, controller.v1.productAdmin.checkProduct);
   // 商品详情，区分admin/工作人员/用户/未登录用户
   router.get('/v1/product/:pid', allRole, controller.v1.productInfo.getProductDetail);
   // 商品列表，区分admin/工作人员/用户/未登录用户
   router.get('/v1/products/list', allRole, controller.v1.productInfo.getProductList);
+  // 新品推荐商品列表
+  router.post('/v1/products/list', allRole, controller.v1.productInfo.postProductList);
 
   // 购物车查询
   router.get('/v1/shoppingcart', auth, controller.v1.shoppingCart.getShoppingCartList);
@@ -72,5 +71,4 @@ module.exports = app => {
 
   // 获取qiniu token
   router.post('/v1/admin/qiniu', auth, adminRole, controller.v1.qiniu.getToken);
-  // router.all(controller.home);
 };

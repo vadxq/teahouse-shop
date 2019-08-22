@@ -207,6 +207,38 @@ class ProductInfoService extends Service {
       res: '操作失败',
     };
   }
+
+  /**
+   * 推荐新品商品列表
+   * @param {Object} req - { new, recommend }
+   * @return {Object} - return data
+   */
+  async postProductList(req) {
+    const product = await this.ctx.model.Product.find({ dele: false, check: true, $or: [{ new: req.new }, { recommend: req.recommend }] }, {
+      pid: 1,
+      title: 1,
+      desc: 1,
+      cover: 1,
+      detail: 1,
+      sale: 1,
+      price: 1,
+      total: 1,
+      count: 1,
+      createAt: 1,
+      updateAt: 1,
+    })
+      .sort({ pid: -1 });
+    if (product) {
+      return {
+        status: 1,
+        res: product,
+      };
+    }
+    return {
+      status: 0,
+      res: '操作失败',
+    };
+  }
 }
 
 module.exports = ProductInfoService;
