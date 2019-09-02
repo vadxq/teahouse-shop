@@ -75,3 +75,6 @@ npm run start || npm start    // 127.0.0.1:7001
 npm run stop
 ```
 
+## 文档
+
+[APIdoc](server/APIdoc.md)
