@@ -4,12 +4,14 @@ import Antd from 'ant-design-vue'
 import router from './router'
 import axios from './lib/axios'
 import store from './store'
+import VeBar from 'v-charts/lib/bar.common'
 
 import 'ant-design-vue/dist/antd.css'
 
 Vue.config.productionTip = false
 
 Vue.use(Antd)
+Vue.component(VeBar.name, VeBar)
 
 Vue.prototype.$http = axios
 Vue.prototype.$message.config({

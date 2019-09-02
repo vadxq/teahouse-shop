@@ -115,7 +115,7 @@ export default {
     },
     // 删除订单
     async delOrder(oid) {
-      let res = await this.$http.delete(`/api/v1/admin/order/:${oid}`)
+      let res = await this.$http.delete(`/api/v1/admin/order/${oid}`)
       if (res.data.success) {
         this.$store.dispatch('orders/getOrders', { page: this.$store.state.orders.currentPage, limit: 10 })
         this.$message.success('设置成功')

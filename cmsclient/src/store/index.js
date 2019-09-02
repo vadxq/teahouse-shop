@@ -5,6 +5,7 @@ import upload from './modules/upload'
 import user from './modules/user'
 import members from './modules/members'
 import orders from './modules/orders'
+import indexdata from './modules/indexdata'
 
 Vue.use(Vuex)
 
@@ -17,6 +18,7 @@ export default new Vuex.Store({
     user,
     members,
     orders,
+    indexdata,
   },
   strict: debug,
 })

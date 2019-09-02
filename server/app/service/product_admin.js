@@ -40,13 +40,10 @@ class ProductAdminService extends Service {
    * @return {Object} - return data
    */
   async changeProduct(req) {
-    const product = await this.ctx.model.Product.findOne({ pid: req.pid });
-    req.count = req.total - product.sale;
     const res = await this.ctx.model.Product.findOneAndUpdate({ pid: req.pid }, {
       title: req.title,
       desc: req.desc,
       cover: req.cover,
-      // total: req.total,
       price: req.price,
       new: req.new,
       recommend: req.recommend,
