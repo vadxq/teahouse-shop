@@ -71,4 +71,7 @@ module.exports = app => {
 
   // 获取qiniu token
   router.post('/v1/admin/qiniu', auth, adminRole, controller.v1.qiniu.getToken);
+
+  // 获取数据
+  router.get('/v1/admin/saledata', auth, role, controller.v1.saleData.getSaleData);
 };

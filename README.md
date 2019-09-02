@@ -20,6 +20,8 @@ Nginx
 
 Docker
 
+[APIdoc](server/APIdoc.md)
+
 [具体查看后端readme](server/README.md)
 
 - 管理后台前端

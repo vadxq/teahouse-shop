@@ -187,8 +187,13 @@ export default {
           localStorage.setItem('id', btoa(this.login.password))
         }
         this.$store.dispatch('user/getUserInfo');
-        this.$router.push(this.$route.query.redirect || '/');
         this.$message.success('欢迎回来！', 3);
+        console.log(this.$route.query.redirect)
+        if(this.$route.fullPath === '/login') {
+          this.$router.push('/');
+        } else {
+          this.$router.push(`${this.$route.query.redirect}`);
+        }
       } else {
         this.$message.error(res.data.message);
       }
@@ -203,7 +208,7 @@ export default {
       } else {
         this.$message.error(res.data.message);
       }
-      this.logging = false;
+      this.logguping = false;
     },
   },
   mounted() {
